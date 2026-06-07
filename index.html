@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy 2nd Mensive 🎀</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Space+Mono:wght@400;700&family=Kalam:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+    <!-- Petunjuk -->
+    <div class="hint-text">✨ Scroll ke bawah & geser-geser elemennya ✨</div>
+
+
+    <div class="scrapbook-board" id="board">
+        
+        <!-- Kertas Sobek (Dekorasi) -->
+        <div class="drag-item torn-paper desktop-pos mobile-pos-1" style="--rot: -12deg;"></div>
+
+
+        <!-- Kartu Pink Utama (Kata-kata) -->
+        <div class="drag-item pink-card desktop-pos mobile-pos-2" style="--rot: -4deg;">
+            <p class="small-caps">WELCOME TO</p>
+            <h1 class="fancy-text">Our 2nd Month<br>Collective</h1>
+            <p class="handwritten">
+                Happy mensive, dek. <br>
+                Time flies so fast, ya. <br>
+                Two months ago we were just us, <br>
+                and now you're the person I always want to tell everything to.
+            </p>
+        </div>
+
+
+        <!-- FOTO BERSAMA CUMA SATU -->
+        <div class="drag-item polaroid photo-polaroid desktop-pos mobile-pos-3" style="--rot: -6deg;">
+            <div class="media-container">
+                <!-- Ganti foto-kita.jpg dengan nama file fotomu -->
+                <img src="fotokita.png" alt="Our Photo">
+            </div>
+            <p class="polaroid-caption">My favorite human 🤍</p>
+            <div class="tape tape-top"></div>
+        </div>
+
+
+        <!-- Video Kita -->
+        <div class="drag-item polaroid video-polaroid desktop-pos mobile-pos-4" style="--rot: 8deg;">
+            <div class="media-container">
+                <!-- Ganti video-kita.mp4 dengan nama file videomu -->
+                <video src="popo.mp4" controls></video>
+            </div>
+            <p class="polaroid-caption">Liat deh </p>
+            <div class="tape tape-bottom"></div>
+        </div>
+
+
+        <!-- Struk Kasir (Live Timer Jadian) -->
+        <div class="drag-item receipt desktop-pos mobile-pos-5" style="--rot: 5deg;">
+            <h3>RETAIL THERAPY</h3>
+            <p>========================</p>
+            <p>ITEM: YOU & ME</p>
+            <p>PRICE: PRICELESS</p>
+            <p>========================</p>
+            <p style="text-align: center; margin-top: 10px;">TIME TOGETHER:</p>
+            <div class="timer" id="timer">
+                <span id="days">00</span>D 
+                <span id="hours">00</span>H 
+                <span id="minutes">00</span>M 
+                <span id="seconds">00</span>S
+            </div>
+            <p>========================</p>
+            <p class="barcode">|| | ||| || ||| | || |||</p>
+            <p>THANK YOU FOREVER</p>
+        </div>
+
+
+        <!-- Stiker Dekorasi -->
+        <div class="drag-item sticker s1" style="--rot: 10deg;">⭐</div>
+        <div class="drag-item sticker s2" style="--rot: -15deg;">🎀</div>
+        <div class="drag-item sticker s3" style="--rot: 5deg;">✨</div>
+        <div class="drag-item sticker s4" style="--rot: -20deg;">🌸</div>
+
+
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
