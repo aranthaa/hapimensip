@@ -1,90 +1,106 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy 2nd Mensive 🎀</title>
-    <link rel="stylesheet" href="kimek.css">
-    <link href="https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Space+Mono:wght@400;700&family=Kalam:wght@300;400&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy 2nd Mensive 🎀</title>
+    <style>
+        /* CSS Gabungan */
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        body { background-color: #f7f9f9; background-image: radial-gradient(#d1d1d1 1px, transparent 1px); background-size: 20px 20px; font-family: 'Kalam', cursive; overflow-x: hidden; }
+        
+        .hint-text { position: fixed; top: 15px; width: 100%; text-align: center; color: #888; font-size: 0.8rem; pointer-events: none; z-index: 100; }
+        
+        .scrapbook-board { position: relative; width: 100vw; min-height: 200vh; padding-top: 50px; }
+        
+        .drag-item { position: absolute; cursor: grab; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--rot, 0deg)); touch-action: none; }
+        
+        .pink-card { background-color: #f9cce1; width: 300px; padding: 25px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); border-radius: 5px; }
+        h1 { font-family: sans-serif; font-size: 1.5rem; color: #5c3a46; margin-bottom: 10px; }
+        
+        .polaroid { background: #fff; padding: 10px 10px 30px 10px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); width: 220px; }
+        .media-container { width: 100%; height: 200px; overflow: hidden; background: #eee; }
+        .media-container img, .media-container video { width: 100%; height: 100%; object-fit: cover; }
+        
+        .receipt { background-color: #fffaf0; width: 200px; padding: 15px; font-family: monospace; box-shadow: 3px 3px 10px rgba(0,0,0,0.1); }
+        .timer { font-weight: bold; text-align: center; font-size: 1.2rem; margin-top: 10px; }
+
+        /* Posisi Mobile */
+        .pos-1 { top: 10%; left: 10%; }
+        .pos-2 { top: 35%; left: 15%; }
+        .pos-3 { top: 65%; left: 10%; }
+        .pos-4 { top: 95%; left: 15%; }
+    </style>
 </head>
 <body>
 
+    <div class="hint-text">✨ Geser-geser elemennya ✨</div>
+    
+    <div class="scrapbook-board">
+        <div class="drag-item pink-card pos-1" style="--rot: -3deg;">
+            <h1>Our 2nd Month</h1>
+            <p>Happy mensive, dek. Waktu cepet banget ya, udah 2 bulan aja.</p>
+        </div>
+        
+        <div class="drag-item polaroid pos-2" style="--rot: 2deg;">
+            <div class="media-container"><img src="fotokita.png" alt="Foto"></div>
+        </div>
+        
+        <div class="drag-item polaroid pos-3" style="--rot: -2deg;">
+            <div class="media-container"><video src="popo.mp4" controls></video></div>
+        </div>
+        
+        <div class="drag-item receipt pos-4" style="--rot: 4deg;">
+            <p>TIME TOGETHER:</p>
+            <div class="timer" id="timer">
+                <span id="days">00</span>D <span id="hours">00</span>H <span id="minutes">00</span>M <span id="seconds">00</span>S
+            </div>
+        </div>
+    </div>
 
-    <!-- Petunjuk -->
-    <div class="hint-text">✨ Scroll ke bawah & geser-geser elemennya ✨</div>
+    <script>
+        // Logic Drag
+        const items = document.querySelectorAll('.drag-item');
+        let active = null, initialX, initialY, z = 10;
+        
+        items.forEach(i => {
+            i.style.setProperty('--tx', '0px'); i.style.setProperty('--ty', '0px');
+            i.addEventListener('mousedown', start);
+            i.addEventListener('touchstart', start, {passive: false});
+        });
 
+        function start(e) {
+            if(e.target.tagName === 'VIDEO') return;
+            active = e.currentTarget;
+            active.style.zIndex = ++z;
+            initialX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+            initialY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
+            active.dataset.x = parseFloat(active.style.getPropertyValue('--tx')) || 0;
+            active.dataset.y = parseFloat(active.style.getPropertyValue('--ty')) || 0;
+        }
 
-    <div class="scrapbook-board" id="board">
-        
-        <!-- Kertas Sobek (Dekorasi) -->
-        <div class="drag-item torn-paper desktop-pos mobile-pos-1" style="--rot: -12deg;"></div>
+        window.addEventListener('mousemove', move);
+        window.addEventListener('touchmove', move, {passive: false});
+        function move(e) {
+            if (!active) return;
+            e.preventDefault();
+            let cx = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+            let cy = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
+            active.style.setProperty('--tx', `${parseFloat(active.dataset.x) + (cx - initialX)}px`);
+            active.style.setProperty('--ty', `${parseFloat(active.dataset.y) + (cy - initialY)}px`);
+        }
+        window.addEventListener('mouseup', () => active = null);
+        window.addEventListener('touchend', () => active = null);
 
-
-        <!-- Kartu Pink Utama (Kata-kata) -->
-        <div class="drag-item pink-card desktop-pos mobile-pos-2" style="--rot: -4deg;">
-            <p class="small-caps">WELCOME TO</p>
-            <h1 class="fancy-text">Our 2nd Month<br>Collective</h1>
-            <p class="handwritten">
-                Happy mensive, dek. <br>
-                Time flies so fast, ya. <br>
-                Two months ago we were just us, <br>
-                and now you're the person I always want to tell everything to.
-            </p>
-        </div>
-
-
-        <!-- FOTO BERSAMA CUMA SATU -->
-        <div class="drag-item polaroid photo-polaroid desktop-pos mobile-pos-3" style="--rot: -6deg;">
-            <div class="media-container">
-                <!-- Ganti foto-kita.jpg dengan nama file fotomu -->
-                <img src="fotokita.png" alt="Our Photo">
-            </div>
-            <p class="polaroid-caption">My favorite human 🤍</p>
-            <div class="tape tape-top"></div>
-        </div>
-
-
-        <!-- Video Kita -->
-        <div class="drag-item polaroid video-polaroid desktop-pos mobile-pos-4" style="--rot: 8deg;">
-            <div class="media-container">
-                <!-- Ganti video-kita.mp4 dengan nama file videomu -->
-                <video src="popo.mp4" controls></video>
-            </div>
-            <p class="polaroid-caption">Liat deh </p>
-            <div class="tape tape-bottom"></div>
-        </div>
-
-
-        <!-- Struk Kasir (Live Timer Jadian) -->
-        <div class="drag-item receipt desktop-pos mobile-pos-5" style="--rot: 5deg;">
-            <h3>RETAIL THERAPY</h3>
-            <p>========================</p>
-            <p>ITEM: YOU & ME</p>
-            <p>PRICE: PRICELESS</p>
-            <p>========================</p>
-            <p style="text-align: center; margin-top: 10px;">TIME TOGETHER:</p>
-            <div class="timer" id="timer">
-                <span id="days">00</span>D 
-                <span id="hours">00</span>H 
-                <span id="minutes">00</span>M 
-                <span id="seconds">00</span>S
-            </div>
-            <p>========================</p>
-            <p class="barcode">|| | ||| || ||| | || |||</p>
-            <p>THANK YOU FOREVER</p>
-        </div>
-
-
-        <!-- Stiker Dekorasi -->
-        <div class="drag-item sticker s1" style="--rot: 10deg;">⭐</div>
-        <div class="drag-item sticker s2" style="--rot: -15deg;">🎀</div>
-        <div class="drag-item sticker s3" style="--rot: 5deg;">✨</div>
-        <div class="drag-item sticker s4" style="--rot: -20deg;">🌸</div>
-
-
-    </div>
-
-
-    <script src="script.js"></script>
+        // Timer
+        const start = new Date("April 07, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const diff = new Date().getTime() - start;
+            document.getElementById("days").innerText = Math.floor(diff / (1000*60*60*24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000*60*60)) / (1000*60));
+            document.getElementById("seconds").innerText = Math.floor((diff % (1000*60)) / 1000);
+        }, 1000);
+    </script>
 </body>
 </html>
